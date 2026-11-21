@@ -488,6 +488,78 @@
     togglePause();
   });
 
+  // Dev Mode Inspector Logic
+  const devModeBtn = document.getElementById('devModeBtn');
+  const devInspectorPanel = document.getElementById('devInspectorPanel');
+  const closeDevBtn = document.getElementById('closeDevBtn');
+  const devSpeedSlider = document.getElementById('devSpeedSlider');
+  const devSpeedVal = document.getElementById('devSpeedVal');
+  const devGravSlider = document.getElementById('devGravSlider');
+  const devGravVal = document.getElementById('devGravVal');
+  const devJumpSlider = document.getElementById('devJumpSlider');
+  const devJumpVal = document.getElementById('devJumpVal');
+  const devColorSelect = document.getElementById('devColorSelect');
+  const exportGameConfigBtn = document.getElementById('exportGameConfigBtn');
+  const exportStatus = document.getElementById('exportStatus');
+
+  function toggleDevMode() {
+    devInspectorPanel.classList.toggle('hidden');
+  }
+
+  if (devModeBtn) devModeBtn.addEventListener('click', toggleDevMode);
+  if (closeDevBtn) closeDevBtn.addEventListener('click', toggleDevMode);
+
+  if (devSpeedSlider) {
+    devSpeedSlider.addEventListener('input', (e) => {
+      baseSpeed = parseFloat(e.target.value);
+      currentSpeed = baseSpeed;
+      devSpeedVal.textContent = baseSpeed.toFixed(1);
+    });
+  }
+
+  if (devGravSlider) {
+    devGravSlider.addEventListener('input', (e) => {
+      player.gravity = parseFloat(e.target.value);
+      devGravVal.textContent = player.gravity.toFixed(2);
+    });
+  }
+
+  if (devJumpSlider) {
+    devJumpSlider.addEventListener('input', (e) => {
+      player.jumpPower = parseFloat(e.target.value);
+      devJumpVal.textContent = player.jumpPower.toFixed(1);
+    });
+  }
+
+  if (devColorSelect) {
+    devColorSelect.addEventListener('change', (e) => {
+      player.color = e.target.value;
+    });
+  }
+
+  if (exportGameConfigBtn) {
+    exportGameConfigBtn.addEventListener('click', () => {
+      const cfg = {
+        baseSpeed,
+        gravity: player.gravity,
+        jumpPower: player.jumpPower,
+        playerColor: player.color,
+        exportedAt: new Date().toISOString()
+      };
+      navigator.clipboard.writeText(JSON.stringify(cfg, null, 2)).then(() => {
+        exportStatus.textContent = '✓ Config copied to clipboard!';
+        setTimeout(() => { exportStatus.textContent = ''; }, 2500);
+      });
+    });
+  }
+
+  // Keybindings
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'KeyE') {
+      toggleDevMode();
+    }
+  });
+
   // Initial draw render
   drawBackground();
   player.draw();

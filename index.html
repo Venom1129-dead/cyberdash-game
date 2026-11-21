@@ -18,6 +18,7 @@
         <span class="version-tag">2099 v1.0</span>
       </div>
       <div class="stats-hud">
+        <button id="devModeBtn" class="dev-toggle-btn" title="Toggle Live In-Game Physics & Obstacle Inspector (Key: E)">⚙️ DEV MODE</button>
         <div class="hud-item">
           <span class="hud-label">SCORE</span>
           <span id="currentScore" class="hud-val">0</span>
@@ -32,6 +33,41 @@
         </div>
       </div>
     </header>
+
+    <!-- In-Game Live Dev Inspector (Live Real-Time Tuning) -->
+    <div id="devInspectorPanel" class="dev-inspector hidden">
+      <div class="inspector-header">
+        <span>⚡ LIVE IN-GAME DEV INSPECTOR (Press 'E' to toggle)</span>
+        <button id="closeDevBtn" class="close-dev">✕</button>
+      </div>
+      <div class="inspector-controls">
+        <div class="control-row">
+          <label>Base Speed (<span id="devSpeedVal">6.0</span>):</label>
+          <input type="range" id="devSpeedSlider" min="3.0" max="14.0" step="0.5" value="6.0">
+        </div>
+        <div class="control-row">
+          <label>Gravity (<span id="devGravVal">0.68</span>):</label>
+          <input type="range" id="devGravSlider" min="0.3" max="1.5" step="0.05" value="0.68">
+        </div>
+        <div class="control-row">
+          <label>Jump Power (<span id="devJumpVal">-12.5</span>):</label>
+          <input type="range" id="devJumpSlider" min="-18.0" max="-8.0" step="0.5" value="-12.5">
+        </div>
+        <div class="control-row">
+          <label>Player Color:</label>
+          <select id="devColorSelect">
+            <option value="#00f0ff">Cyan Neon</option>
+            <option value="#39ff14">Matrix Green</option>
+            <option value="#ff007f">Magenta Synth</option>
+            <option value="#ffd700">Cyber Gold</option>
+          </select>
+        </div>
+      </div>
+      <div class="inspector-actions">
+        <button id="exportGameConfigBtn" class="cyber-btn-small">💾 Export Config JSON</button>
+        <span id="exportStatus" class="export-status"></span>
+      </div>
+    </div>
 
     <div class="canvas-wrapper">
       <canvas id="gameCanvas" width="800" height="400"></canvas>
