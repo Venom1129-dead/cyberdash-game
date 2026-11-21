@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CyberDash 2099 — High-Speed Hypercasual Arcade Runner</title>
+  <meta name="description" content="Instant-play cyberpunk arcade runner. Zero download, 60 FPS, procedural synth audio. Jump, dodge, and set high scores.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <div class="logo">
+        <span class="cyber-tag">CYBER//DASH</span>
+        <span class="version-tag">2099 v1.0</span>
+      </div>
+      <div class="stats-hud">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span id="currentScore" class="hud-val">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">BEST</span>
+          <span id="highScore" class="hud-val gold">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">SPEED</span>
+          <span id="speedVal" class="hud-val cyan">1.0x</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="canvas-wrapper">
+      <canvas id="gameCanvas" width="800" height="400"></canvas>
+      
+      <!-- Overlay Screen: Start / Game Over -->
+      <div id="uiOverlay" class="ui-overlay">
+        <div class="overlay-content">
+          <h1 id="overlayTitle" class="neon-title">CYBER//DASH</h1>
+          <p id="overlaySubtitle" class="overlay-sub">SURVIVE THE NEON GRID</p>
+          
+          <div id="gameOverStats" class="game-over-stats hidden">
+            <div class="stat-box">
+              <span class="stat-label">FINAL SCORE</span>
+              <span id="finalScore" class="stat-number">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">NEW BEST?</span>
+              <span id="newBestBadge" class="stat-badge">NO</span>
+            </div>
+          </div>
+
+          <div class="controls-guide">
+            <div class="ctrl-chip"><kbd>SPACE</kbd> / <kbd>↑</kbd> / Tap to Jump</div>
+            <div class="ctrl-chip"><kbd>P</kbd> or <kbd>ESC</kbd> to Pause</div>
+            <div class="ctrl-chip">Double-jump enabled!</div>
+          </div>
+
+          <button id="actionBtn" class="cyber-btn glow-btn">
+            <span class="btn-text">INITIALIZE RUN</span>
+            <span class="btn-glitch"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pause Overlay -->
+      <div id="pauseOverlay" class="pause-overlay hidden">
+        <h2>SYSTEM PAUSED</h2>
+        <p>Press <kbd>P</kbd> or click to resume</p>
+      </div>
+    </div>
+
+    <!-- Developer Pack CTA Banner -->
+    <footer class="game-footer">
+      <div class="dev-banner">
+        <div class="dev-info">
+          <span class="badge">DEVELOPER EDITION</span>
+          <h4>Want to build or monetize web games like this?</h4>
+          <p>Get the complete clean JavaScript source code, procedural Web Audio synth engine, and full commercial resale rights.</p>
+        </div>
+        <div class="dev-action">
+          <a href="https://gumroad.com" target="_blank" rel="noopener noreferrer" class="dev-buy-btn">
+            <span>Get Source Code — $9</span>
+          </a>
+          <span class="guarantee-tag">100% Zero-Dependency JS</span>
+        </div>
+      </div>
+      <div class="portfolio-links">
+        <p>Created by Antigravity Autonomous Income Lab • Shareholder Portfolio Asset #09</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+:root {
+  --bg-dark: #0a0b12;
+  --bg-card: #121324;
+  --neon-pink: #ff007f;
+  --neon-cyan: #00f0ff;
+  --neon-gold: #ffd700;
+  --neon-purple: #9d4edd;
+  --text-primary: #f0f4f8;
+  --text-muted: #8e9bb0;
+  --border-neon: rgba(0, 240, 255, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(157, 78, 221, 0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #07080f 0%, #0d0f1a 100%);
+  overflow-x: hidden;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Header & HUD */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-neon);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.08);
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.cyber-tag {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+.version-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--neon-pink);
+  letter-spacing: 1px;
+}
+
+.stats-hud {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.hud-label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.hud-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hud-val.gold {
+  color: var(--neon-gold);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.hud-val.cyan {
+  color: var(--neon-cyan);
+}
+
+/* Canvas Wrapper */
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: #05060b;
+  border: 2px solid rgba(0, 240, 255, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.15), inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Overlays */
+.ui-overlay, .pause-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 18, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.neon-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-shadow: 0 0 15px var(--neon-pink), 0 0 30px var(--neon-pink);
+  margin-bottom: 0.2rem;
+}
+
+.overlay-sub {
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: var(--neon-cyan);
+  margin-bottom: 1.5rem;
+}
+
+.game-over-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  min-width: 120px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.stat-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--neon-pink);
+}
+
+.stat-badge {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--neon-gold);
+}
+
+.controls-guide {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ctrl-chip {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+kbd {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+  font-family: monospace;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Action Button */
+.cyber-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(135deg, var(--neon-pink), #b5179e);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+  transition: all 0.2s ease;
+}
+
+.cyber-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.8);
+}
+
+.cyber-btn:active {
+  transform: translateY(0);
+}
+
+/* Pause Overlay */
+.pause-overlay h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem;
+  color: var(--neon-gold);
+  margin-bottom: 0.5rem;
+}
+
+/* Footer & CTA */
+.game-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.dev-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(90deg, #131428 0%, #1c1533 100%);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  border-radius: 8px;
+  padding: 1rem 1.4rem;
+}
+
+.dev-info .badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 1px;
+  background: rgba(157, 78, 221, 0.25);
+  color: #d8b4fe;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.3rem;
+}
+
+.dev-info h4 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.dev-info p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.dev-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.dev-buy-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--neon-cyan);
+  color: #07080f;
+  padding: 0.65rem 1.25rem;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dev-buy-btn:hover {
+  background: #fff;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+  transform: translateY(-2px);
+}
+
+.guarantee-tag {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.portfolio-links {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #555e70;
+}
+
+@media (max-width: 650px) {
+  .dev-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .neon-title {
+    font-size: 2rem;
+  }
+  .cyber-tag {
+    font-size: 1.1rem;
+  }
+}
